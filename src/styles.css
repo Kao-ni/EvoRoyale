@@ -1,0 +1,395 @@
+html,
+body,
+#game {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: #1e251d;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+canvas {
+  display: block;
+}
+
+/* ------------------------------------------------------------------ *
+ * Main menu — grassland / survival .io theme
+ * ------------------------------------------------------------------ */
+
+:root {
+  --grass: #7cbf5a;
+  --grass-dark: #74b654;
+  --foliage: #2f5233;
+  --wood: #8a5a3c;
+  --wood-dark: #5f3c26;
+  --wood-light: #a9744d;
+  --parchment: #f4ead2;
+  --play: #4fbf62;
+  --play-dark: #3a9c4c;
+  --play-rim: #2f7d3d;
+  --gold: #f5c542;
+}
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  /* checkerboard grassland */
+  background-color: var(--grass);
+  background-image:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 255, 255, 0.18), transparent 55%),
+    radial-gradient(120% 120% at 50% 120%, rgba(0, 40, 0, 0.28), transparent 60%),
+    conic-gradient(
+      from 90deg at 50% 50%,
+      var(--grass-dark) 0 25%,
+      var(--grass) 0 50%,
+      var(--grass-dark) 0 75%,
+      var(--grass) 0
+    );
+  background-size:
+    100% 100%,
+    100% 100%,
+    88px 88px;
+  animation: menu-in 0.5s ease-out both;
+}
+
+.menu.is-hiding {
+  animation: menu-out 0.4s ease-in forwards;
+}
+
+/* ---- ambient scenery ---- */
+.scenery {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scenery .tree,
+.scenery .rock {
+  position: absolute;
+  filter: drop-shadow(0 8px 10px rgba(0, 40, 0, 0.18));
+  transform-origin: 50% 90%;
+}
+
+.tree {
+  width: 190px;
+  animation: sway 6s ease-in-out infinite;
+}
+.tree--a {
+  top: 6%;
+  left: 7%;
+  width: 220px;
+}
+.tree--b {
+  bottom: 4%;
+  right: 8%;
+  width: 250px;
+  animation-delay: -2.2s;
+}
+.tree--c {
+  top: 12%;
+  right: 14%;
+  width: 150px;
+  opacity: 0.9;
+  animation-delay: -4s;
+}
+.rock {
+  width: 120px;
+}
+.rock--a {
+  bottom: 9%;
+  left: 12%;
+}
+.rock--b {
+  top: 20%;
+  left: 26%;
+  width: 90px;
+  opacity: 0.9;
+}
+
+/* ---- center panel ---- */
+.panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+  width: min(440px, 92vw);
+  text-align: center;
+}
+
+/* ---- wooden signpost plaque ---- */
+.plaque {
+  position: relative;
+  padding: 22px 40px 26px;
+  border-radius: 18px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.05) 0 2px,
+      transparent 2px 26px
+    ),
+    linear-gradient(180deg, var(--wood-light), var(--wood) 55%, var(--wood-dark));
+  border: 4px solid var(--wood-dark);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -6px 0 rgba(0, 0, 0, 0.22),
+    0 14px 0 var(--wood-dark),
+    0 22px 30px rgba(0, 30, 0, 0.35);
+  animation: drop-in 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.plaque__post {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  width: 22px;
+  height: 52px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--wood-dark), var(--wood), var(--wood-dark));
+  box-shadow: inset -3px 0 0 rgba(0, 0, 0, 0.25);
+  z-index: -1;
+}
+
+.plaque__title {
+  margin: 0;
+  font-family: "Baloo 2", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(46px, 9vw, 72px);
+  line-height: 0.95;
+  letter-spacing: 0.5px;
+  color: var(--parchment);
+  text-shadow:
+    0 2px 0 var(--wood-dark),
+    0 4px 0 rgba(0, 0, 0, 0.25),
+    0 6px 8px rgba(0, 0, 0, 0.35);
+}
+
+.plaque__mascot {
+  position: absolute;
+  top: -46px;
+  right: -18px;
+  width: 78px;
+  height: 78px;
+  transform: rotate(8deg);
+  filter: drop-shadow(0 6px 6px rgba(0, 30, 0, 0.3));
+  animation: bob 3s ease-in-out infinite;
+}
+
+/* ---- tagline ---- */
+.tagline {
+  margin: 12px 0 4px;
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  color: #fffdf3;
+  text-shadow: 0 2px 4px rgba(0, 30, 0, 0.4);
+}
+
+/* ---- form ---- */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 6px 18px;
+  background: var(--parchment);
+  border: 3px solid var(--wood-dark);
+  border-radius: 14px;
+  box-shadow: 0 6px 0 var(--wood-dark), 0 12px 18px rgba(0, 30, 0, 0.25);
+}
+
+.field__label {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--wood-dark);
+}
+
+.field__input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 8px;
+  border: none;
+  background: transparent;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--foliage);
+}
+.field__input::placeholder {
+  color: #b8a882;
+  font-weight: 500;
+}
+.field__input:focus {
+  outline: none;
+}
+.field:focus-within {
+  box-shadow:
+    0 0 0 3px var(--gold),
+    0 6px 0 var(--wood-dark),
+    0 12px 18px rgba(0, 30, 0, 0.25);
+}
+
+/* ---- play button ---- */
+.play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 20px;
+  border: 4px solid var(--play-rim);
+  border-radius: 16px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #6fd47f, var(--play) 45%, var(--play-dark));
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.4),
+    0 8px 0 var(--play-rim),
+    0 16px 24px rgba(0, 40, 0, 0.32);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 2px 0 var(--play-rim), 0 3px 5px rgba(0, 0, 0, 0.25);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.play:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.5),
+    0 10px 0 var(--play-rim),
+    0 20px 28px rgba(0, 40, 0, 0.36);
+}
+.play:active {
+  transform: translateY(6px);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    0 2px 0 var(--play-rim),
+    0 6px 12px rgba(0, 40, 0, 0.3);
+}
+.play:focus-visible {
+  outline: 4px solid var(--gold);
+  outline-offset: 3px;
+}
+.play__icon {
+  font-size: 24px;
+  transform: translateY(1px);
+}
+
+/* ---- tips ---- */
+.tips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tips li {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--foliage);
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 2px solid rgba(0, 50, 0, 0.15);
+  border-radius: 999px;
+  box-shadow: 0 3px 0 rgba(0, 40, 0, 0.15);
+}
+.tips b {
+  color: var(--play-dark);
+  font-weight: 800;
+}
+
+.footnote {
+  margin: 6px 0 0;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 30, 0, 0.5);
+}
+
+/* ---- keyframes ---- */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: rotate(8deg) translateY(0);
+  }
+  50% {
+    transform: rotate(8deg) translateY(-6px);
+  }
+}
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes menu-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .plaque,
+  .tree,
+  .plaque__mascot {
+    animation: none !important;
+  }
+  .play {
+    transition: none;
+  }
+}

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EvoRoyale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="game"></div>
+
+    <div id="menu" class="menu">
+      <!-- ambient grassland scenery -->
+      <div class="scenery" aria-hidden="true">
+        <svg class="tree tree--a" viewBox="0 0 100 120">
+          <ellipse cx="50" cy="108" rx="26" ry="7" fill="#000" opacity="0.12" />
+          <rect x="44" y="72" width="12" height="36" rx="5" fill="#7a4f30" />
+          <circle cx="50" cy="52" r="34" fill="#5aa03f" />
+          <circle cx="34" cy="60" r="24" fill="#4f9137" />
+          <circle cx="66" cy="60" r="24" fill="#68b04a" />
+          <circle cx="50" cy="44" r="24" fill="#72bd52" />
+        </svg>
+        <svg class="tree tree--b" viewBox="0 0 100 120">
+          <ellipse cx="50" cy="108" rx="26" ry="7" fill="#000" opacity="0.12" />
+          <rect x="44" y="72" width="12" height="36" rx="5" fill="#7a4f30" />
+          <circle cx="50" cy="52" r="34" fill="#5aa03f" />
+          <circle cx="34" cy="60" r="24" fill="#4f9137" />
+          <circle cx="66" cy="60" r="24" fill="#68b04a" />
+          <circle cx="50" cy="44" r="24" fill="#72bd52" />
+        </svg>
+        <svg class="tree tree--c" viewBox="0 0 100 120">
+          <ellipse cx="50" cy="108" rx="26" ry="7" fill="#000" opacity="0.12" />
+          <rect x="44" y="72" width="12" height="36" rx="5" fill="#7a4f30" />
+          <circle cx="50" cy="52" r="34" fill="#5aa03f" />
+          <circle cx="34" cy="60" r="24" fill="#4f9137" />
+          <circle cx="66" cy="60" r="24" fill="#68b04a" />
+          <circle cx="50" cy="44" r="24" fill="#72bd52" />
+        </svg>
+        <svg class="rock rock--a" viewBox="0 0 80 60">
+          <ellipse cx="40" cy="52" rx="30" ry="7" fill="#000" opacity="0.12" />
+          <path d="M12 44 L20 20 L44 12 L68 26 L64 46 Z" fill="#9aa3a8" />
+          <path d="M12 44 L20 20 L36 30 L34 46 Z" fill="#b3bcc1" />
+        </svg>
+        <svg class="rock rock--b" viewBox="0 0 80 60">
+          <ellipse cx="40" cy="52" rx="30" ry="7" fill="#000" opacity="0.12" />
+          <path d="M12 44 L20 20 L44 12 L68 26 L64 46 Z" fill="#9aa3a8" />
+          <path d="M12 44 L20 20 L36 30 L34 46 Z" fill="#b3bcc1" />
+        </svg>
+      </div>
+
+      <div class="panel">
+        <!-- wooden signpost plaque -->
+        <div class="plaque">
+          <div class="plaque__mascot" aria-hidden="true">
+            <svg viewBox="0 0 64 64">
+              <circle cx="32" cy="34" r="20" fill="#f2d3a6" stroke="#3a2a1a" stroke-width="3" />
+              <circle cx="25" cy="31" r="3" fill="#3a2a1a" />
+              <circle cx="39" cy="31" r="3" fill="#3a2a1a" />
+              <path d="M25 42 Q32 47 39 42" fill="none" stroke="#3a2a1a" stroke-width="3" stroke-linecap="round" />
+              <line x1="50" y1="6" x2="50" y2="40" stroke="#d7dde1" stroke-width="6" stroke-linecap="round" />
+              <line x1="50" y1="6" x2="50" y2="40" stroke="#aeb8bf" stroke-width="2" />
+              <rect x="43" y="38" width="14" height="6" rx="2" fill="#8a5a3c" />
+            </svg>
+          </div>
+          <h1 class="plaque__title">EvoRoyale</h1>
+          <div class="plaque__post"></div>
+        </div>
+
+        <p class="tagline">survive&nbsp;·&nbsp;evolve&nbsp;·&nbsp;be the last one standing</p>
+
+        <form id="play-form" class="controls" autocomplete="off">
+          <label class="field">
+            <span class="field__label">Name</span>
+            <input
+              id="name-input"
+              class="field__input"
+              type="text"
+              maxlength="16"
+              placeholder="Type a name…"
+            />
+          </label>
+
+          <button id="play-btn" class="play" type="submit">
+            <span class="play__label">Play</span>
+            <span class="play__icon" aria-hidden="true">▸</span>
+          </button>
+        </form>
+
+        <ul class="tips" aria-label="Controls">
+          <li><b>WASD</b> Move</li>
+          <li><b>Click</b> Attack</li>
+          <li><b>E</b> Mine</li>
+          <li><b>Q</b> Build</li>
+        </ul>
+
+        <p class="footnote">Grow every level. Zone shrinks. One winner. Drop in.</p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+import Phaser from "phaser";
+import "./styles.css";
+import { GameScene } from "./scenes/GameScene";
+
+const config: Phaser.Types.Core.GameConfig = {
+  type: Phaser.AUTO,
+  parent: "game",
+  backgroundColor: "#8dc46a",
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: false,
+      gravity: { x: 0, y: 0 },
+    },
+  },
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 1280,
+    height: 720,
+  },
+  scene: [GameScene],
+};
+
+let game: Phaser.Game | undefined;
+
+const menu = document.getElementById("menu");
+const form = document.getElementById("play-form") as HTMLFormElement | null;
+const nameInput = document.getElementById("name-input") as HTMLInputElement | null;
+
+// Restore a previously used name so returning players see it.
+if (nameInput) {
+  nameInput.value = localStorage.getItem("evoroyale.name") ?? "";
+  nameInput.focus();
+  nameInput.select();
+}
+
+function startGame(): void {
+  if (game) return;
+
+  const playerName = nameInput?.value.trim() || "Player";
+  localStorage.setItem("evoroyale.name", playerName);
+  (window as unknown as { evoPlayerName?: string }).evoPlayerName = playerName;
+
+  // Fade the menu out, then boot the game underneath it.
+  menu?.classList.add("is-hiding");
+  window.setTimeout(() => menu?.remove(), 400);
+
+  game = new Phaser.Game(config);
+}
+
+form?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  startGame();
+});
