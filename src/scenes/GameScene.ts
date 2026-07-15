@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 import {
   BALANCE,
   BUILDABLES,
@@ -655,7 +655,29 @@ export class GameScene extends Phaser.Scene {
     const keyboard = this.input.keyboard;
 
     if (!keyboard) {
-      throw new Error("Keyboard input is not available.");
+      const stubKey = { isDown: false } as Phaser.Input.Keyboard.Key;
+      this.cursors = {
+        left: stubKey,
+        right: stubKey,
+        up: stubKey,
+        down: stubKey,
+        space: stubKey,
+      } as Phaser.Types.Input.Keyboard.CursorKeys;
+      this.keys = {
+        w: stubKey,
+        a: stubKey,
+        s: stubKey,
+        d: stubKey,
+        b: stubKey,
+        one: stubKey,
+        two: stubKey,
+        three: stubKey,
+        four: stubKey,
+        q: stubKey,
+        e: stubKey,
+        r: stubKey,
+      };
+      return;
     }
 
     this.cursors = keyboard.createCursorKeys();

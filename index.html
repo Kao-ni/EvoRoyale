@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EvoRoyale</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "phaser": "./vendor/phaser.esm.js"
+        }
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -91,6 +99,8 @@
           </button>
         </form>
 
+        <p id="launch-status" class="launch-status" aria-live="polite"></p>
+
         <ul class="tips" aria-label="Controls">
           <li><b>WASD</b> Move</li>
           <li><b>Click</b> Attack</li>
@@ -102,6 +112,6 @@
       </div>
     </div>
 
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>

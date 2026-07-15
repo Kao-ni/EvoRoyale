@@ -334,6 +334,16 @@ canvas {
   text-shadow: 0 1px 3px rgba(0, 30, 0, 0.5);
 }
 
+.launch-status {
+  min-height: 1.4em;
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #fff2b5;
+  text-shadow: 0 1px 3px rgba(0, 30, 0, 0.5);
+}
+
 /* ---- keyframes ---- */
 @keyframes sway {
   0%,

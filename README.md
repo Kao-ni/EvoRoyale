@@ -9,6 +9,15 @@ npm install
 npm run dev
 ```
 
+To open the app from VS Code Live Server or any static server, use the root `index.html` directly.
+
+For a production-style preview built by Vite:
+
+```bash
+npm run build
+npm run preview
+```
+
 ## Controls
 
 - WASD or arrow keys: move

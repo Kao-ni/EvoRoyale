@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 import "./styles.css";
 import { GameScene } from "./scenes/GameScene";
 
@@ -26,7 +26,20 @@ let game: Phaser.Game | undefined;
 
 const menu = document.getElementById("menu");
 const form = document.getElementById("play-form") as HTMLFormElement | null;
+const playButton = document.getElementById("play-btn") as HTMLButtonElement | null;
 const nameInput = document.getElementById("name-input") as HTMLInputElement | null;
+const launchStatus = document.getElementById("launch-status") as HTMLParagraphElement | null;
+
+function setLaunchStatus(message = ""): void {
+  if (launchStatus) {
+    launchStatus.textContent = message;
+  }
+}
+
+function destroyGame(): void {
+  game?.destroy(true);
+  game = undefined;
+}
 
 // Restore a previously used name so returning players see it.
 if (nameInput) {
@@ -36,20 +49,39 @@ if (nameInput) {
 }
 
 function startGame(): void {
-  if (game) return;
+  if (game) {
+    destroyGame();
+  }
 
   const playerName = nameInput?.value.trim() || "Player";
   localStorage.setItem("evoroyale.name", playerName);
   (window as unknown as { evoPlayerName?: string }).evoPlayerName = playerName;
+  setLaunchStatus("");
 
-  // Fade the menu out, then boot the game underneath it.
-  menu?.classList.add("is-hiding");
-  window.setTimeout(() => menu?.remove(), 400);
+  try {
+    // Fade the menu out, then boot the game underneath it.
+    menu?.classList.add("is-hiding");
+    window.setTimeout(() => menu?.remove(), 400);
 
-  game = new Phaser.Game(config);
+    game = new Phaser.Game(config);
+  } catch (error) {
+    game = undefined;
+    menu?.classList.remove("is-hiding");
+    setLaunchStatus(
+      error instanceof Error ? error.message : "Unable to start the game.",
+    );
+    throw error;
+  }
 }
 
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
   startGame();
 });
+
+playButton?.addEventListener("click", (event) => {
+  event.preventDefault();
+  startGame();
+});
+
+(window as unknown as { startEvoRoyale?: () => void }).startEvoRoyale = startGame;
